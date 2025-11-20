@@ -1,37 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <title>Rat Club Entry Form (DEV)</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LSCMRC Rat Entry Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    /* Page background & centering */
     body {
+      margin: 0;
+      padding: 40px 10px;
       font-family: Arial, sans-serif;
-      padding: 10px;
-      max-width: 800px;
-      margin: auto;
-      background: #f7f7f7;
+      background: #f5f5f5;
     }
-    .logo-wrap {
+
+    .form-shell {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Main card */
+    .form-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 32px 32px 28px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Header with logo + title */
+    .form-header {
       text-align: center;
-      margin: 10px 0 5px;
+      margin-bottom: 24px;
     }
-    .logo-wrap img {
-      max-width: 100%;
+
+    .form-header img {
+      max-width: 260px;
       height: auto;
+      display: block;
+      margin: 0 auto 12px;
     }
-    h1 {
-      text-align: center;
-      margin-top: 5px;
-      margin-bottom: 20px;
+
+    .form-title {
+      margin: 0;
+      font-size: 1.6rem;
+      letter-spacing: 0.06em;
+      font-weight: bold;
     }
+
+    .form-subtitle {
+      margin: 8px auto 0;
+      max-width: 640px;
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    /* Sections */
     .section {
-      margin-bottom: 20px;
-      padding: 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: #fff;
+      margin-top: 24px;
+      padding-top: 8px;
+      border-top: 1px solid #e0e0e0;
     }
-    label { display: block; margin-top: 10px; }
+
+    .section:first-of-type {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .section h2 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
     input[type=text],
     input[type=email],
     input[type=number],
@@ -39,117 +84,258 @@
     textarea {
       width: 100%;
       padding: 8px;
-      margin-top: 5px;
+      margin-top: 4px;
       box-sizing: border-box;
-    }
-    button {
-      margin-top: 10px;
-      padding: 10px 16px;
-      font-size: 16px;
-      cursor: pointer;
       border-radius: 6px;
-      border: none;
-      background-color: #4CAF50;
-      color: white;
+      border: 1px solid #ccc;
+      font-size: 0.95rem;
     }
-    .hidden { display: none; }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Two-column rows on desktop */
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px 24px;
+    }
+
+    /* Check/radio rows */
+    .inline-options {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.9rem;
+      align-items: center;
+    }
+
+    .inline-options label {
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: normal;
+    }
+
     .subsection {
-      margin-left: 10px;
       margin-top: 10px;
       padding: 10px;
       border-left: 2px solid #aaa;
       background: #f9f9f9;
       border-radius: 6px;
     }
+
     .subsection-header {
       cursor: pointer;
       background: #e2e2e2;
       padding: 8px;
       border-radius: 4px;
       font-weight: bold;
+      font-size: 0.95rem;
     }
+
+    .subsection-content {
+      margin-top: 8px;
+    }
+
     .flex-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
       align-items: center;
     }
-    .flex-row label { flex: 1; }
-    p { margin: 5px 0; }
-    #totalCost { font-weight: bold; font-size: 18px; }
+
+    .flex-row label {
+      flex: 1;
+      margin-top: 6px;
+    }
+
+    p {
+      margin: 5px 0;
+    }
+
+    #totalCost {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    /* Submit button */
+    .submit-row {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    button[type=submit],
+    button[type=button] {
+      margin-top: 10px;
+      padding: 10px 18px;
+      font-size: 15px;
+      cursor: pointer;
+      border-radius: 6px;
+      border: none;
+      background-color: #000;
+      color: white;
+    }
+
+    button[type=button] {
+      background-color: #444;
+      font-size: 14px;
+    }
+
+    button[type=button] + button[type=button] {
+      margin-left: 8px;
+    }
+
+    .helper-text {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 6px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      .form-card {
+        padding: 24px 18px 20px;
+      }
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+      .form-header img {
+        max-width: 220px;
+      }
+    }
   </style>
 </head>
 <body>
-
-  <!-- LOGO (update src to your actual filename)
- <div class="logo-wrap">
-  <img src="savingPNG.png" alt="LSCMRC Logo">
-</div>
-
-  <h1>Rat Club Exhibit Entry Form (DEV)</h1>
-
-  <form id="entryForm">
-
-    <!-- Member Information -->
-    <div class="section">
-      <h2>Member Information</h2>
-      <label>Name or Stud Name*:
-        <input type="text" name="memberName" required>
-      </label>
-      <label>Email*:
-        <input type="email" name="memberEmail" required>
-      </label>
-      <label>Phone:
-        <input type="text" name="phone">
-      </label>
-      <label><input type="checkbox" name="lscmrcMember"> LSCMRC Member</label>
-      <label><input type="checkbox" name="junior"> Junior (under 16)</label>
-    </div>
-
-    <!-- Hire Tanks -->
-    <div class="section">
-      <h2>Hire Tanks</h2>
-      <label><input type="checkbox" id="hireTanksCheckbox" name="hireTanks"> Hire tanks required</label>
-      <div id="tankNumberDiv" class="hidden">
-        <label>Number of tanks (max 2) @ £1.50 each:
-          <input type="number" id="tankNumber" name="tankNumber" min="1" max="2" value="1">
-        </label>
-        <p>Tank Cost: £<span id="tankCost">1.50</span></p>
+  <div class="form-shell">
+    <form id="entryForm" class="form-card">
+      <div class="form-header">
+        <!-- your logo file in the repo root -->
+        <img src="savingPNG.png" alt="LSCMRC logo" />
+        <h1 class="form-title">LSCMRC ENTRIES - RATS</h1>
+        <p class="form-subtitle">
+          The Rat Show Secretary will send you confirmation of your entries via email when the
+          entries have been entered onto the show program. Entries close at 10pm on the Wednesday
+          prior to the show.
+        </p>
       </div>
-    </div>
 
-    <!-- Show Entries -->
-    <div class="section">
-      <h2>Show Entries</h2>
-      <label><input type="checkbox" id="addVarietiesCheckbox"> Add Varieties</label>
-      <div id="varietiesContainer" class="hidden"></div>
-      <button type="button" id="addVarietyBtn" class="hidden">Add Another Exhibit</button>
-    </div>
+      <!-- Member Information -->
+      <div class="section">
+        <h2>Exhibitor details</h2>
 
-    <!-- Pets -->
-    <div class="section">
-      <h2>Pets</h2>
-      <label><input type="checkbox" id="addPetsCheckbox"> Add Pets</label>
-      <div id="petsContainer" class="hidden"></div>
-      <button type="button" id="addPetBtn" class="hidden">Add Another Pet</button>
-    </div>
+        <div class="two-col">
+          <label>Name or Stud Name*:
+            <input type="text" name="memberName" required />
+          </label>
 
-    <!-- Additional Information -->
-    <div class="section">
-      <h2>Additional Information</h2>
-      <label>Other info:
-        <textarea name="otherInfo" rows="4"></textarea>
-      </label>
-    </div>
+          <label>Email*:
+            <input type="email" name="memberEmail" required />
+          </label>
+        </div>
 
-    <!-- Total Cost -->
-    <div class="section">
-      <p>Total Cost: £<span id="totalCost">0.00</span></p>
-    </div>
+        <div class="two-col">
+          <label>Phone:
+            <input type="text" name="phone" />
+          </label>
 
-    <button type="submit">Submit Entry</button>
-  </form>
+          <div>
+            <div class="two-col">
+              <label>
+                <span>LSCMRC Member</span>
+                <div class="inline-options">
+                  <label><input type="checkbox" name="lscmrcMember" /> Yes</label>
+                </div>
+              </label>
 
+              <label>
+                <span>Junior (under 16)</span>
+                <div class="inline-options">
+                  <label><input type="checkbox" name="junior" /> Yes</label>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hire Tanks -->
+      <div class="section">
+        <h2>Hire Tanks</h2>
+        <div class="inline-options">
+          <label>
+            <input type="checkbox" id="hireTanksCheckbox" name="hireTanks" />
+            Do you require hire tanks?
+          </label>
+        </div>
+
+        <div id="tankNumberDiv" class="hidden">
+          <label>Number of tanks (max 2) @ £1.50 each:
+            <input type="number" id="tankNumber" name="tankNumber" min="1" max="2" value="1" />
+          </label>
+          <p>Tank Cost: £<span id="tankCost">1.50</span></p>
+        </div>
+      </div>
+
+      <!-- Show Entries -->
+      <div class="section">
+        <h2>Show Entries</h2>
+        <div class="inline-options">
+          <label>
+            <input type="checkbox" id="addVarietiesCheckbox" />
+            Add Varieties?
+          </label>
+        </div>
+        <div id="varietiesContainer" class="hidden"></div>
+        <button type="button" id="addVarietyBtn" class="hidden">Add Another Exhibit</button>
+      </div>
+
+      <!-- Pets -->
+      <div class="section">
+        <h2>Pets</h2>
+        <div class="inline-options">
+          <label>
+            <input type="checkbox" id="addPetsCheckbox" />
+            Add Pets?
+          </label>
+        </div>
+        <div id="petsContainer" class="hidden"></div>
+        <button type="button" id="addPetBtn" class="hidden">Add Another Pet</button>
+      </div>
+
+      <!-- Additional Information -->
+      <div class="section">
+        <h2>Additional information</h2>
+        <label>Any other information:
+          <textarea name="otherInfo" rows="4"></textarea>
+        </label>
+        <p class="helper-text">
+          Use this space to inform the show secretary of anything else relevant, e.g. bringing
+          kittens to the show for collection etc.
+        </p>
+      </div>
+
+      <!-- Total Cost -->
+      <div class="section">
+        <h2>Total Cost</h2>
+        <p>Total Cost: £<span id="totalCost">0.00</span></p>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- EmailJS + logic -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
     /***************  EMAILJS SETUP  ***************/
@@ -197,7 +383,6 @@
     });
 
     function updateTankCost() {
-      // clamp between 1 and 2 tanks if something is entered
       let num = parseInt(tankNumber.value);
       if (isNaN(num)) {
         tankCost.innerText = '0.00';
@@ -287,7 +472,6 @@
         });
       });
 
-      // recalc when dual entry is toggled
       const dualCheckbox = div.querySelector('input[name^="dualEntry"]');
       if (dualCheckbox) {
         dualCheckbox.addEventListener('change', updateTotalCost);
@@ -382,17 +566,9 @@
     document.getElementById('entryForm').addEventListener('submit', function (event) {
       event.preventDefault();
       emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
-        .then(() => {
-          alert('Entry submitted successfully!');
-        })
-        .catch((error) => {
-          alert('Submission failed: ' + JSON.stringify(error));
-        });
+        .then(() => { alert('Entry submitted successfully!'); },
+              (error) => { alert('Submission failed: ' + JSON.stringify(error)); });
     });
-
-    // Initial total
-    updateTotalCost();
   </script>
-
 </body>
 </html>
