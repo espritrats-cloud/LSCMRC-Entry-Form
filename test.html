@@ -1,326 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LSCMRC Entry Form – Modern UI</title>
-<style>
-    body {
-        font-family: Arial, sans-serif !important;
-        background:#f5f5f5;
-        margin:0;
-        padding:20px;
-    }
-    .container {
-        max-width:900px;
-        margin:auto;
-    }
-    .card {
-        background:white;
-        border-radius:16px;
-        padding:20px;
-        margin-bottom:20px;
-        box-shadow:0 4px 12px rgba(0,0,0,0.08);
-    }
-    h2 {
-        margin-top:0;
-    }
-    label { display:block; margin-bottom:6px; font-weight: normal; text-align:left; }
-    input, select, textarea {
-        width:100%;
-        padding:10px;
-        margin-top:5px;
-        border-radius:8px;
-        border:1px solid #ccc;
-        font-size:1rem;
-    }
-    .checkbox-row {
-        display:flex;
-        gap:10px;
-        align-items:center;
-        margin-top:10px;
-    }
-    .checkbox-row label {
-        margin:0;
-    }
-    .add-btn {
-        background:#0066ff;
-        color:white;
-        padding:10px 16px;
-        border:none;
-        border-radius:10px;
-        cursor:pointer;
-        margin-top:15px;
-        font-size:1rem;
-    }
-    .add-btn:hover { background:#004ccc; }
-    .total-box {
-        background:#e8f0ff;
-        padding:15px;
-        border-radius:12px;
-        font-size:1.2rem;
-        text-align:center;
-    }
-</style>
+  <title>Rat Club Entry Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 10px; max-width: 800px; margin: auto; }
+    h1 { text-align: center; }
+    .section { margin-bottom: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 8px; }
+    label { display: block; margin-top: 10px; }
+    input[type=text], input[type=email], input[type=number], select, textarea { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
+    button { margin-top: 10px; padding: 10px 16px; font-size: 16px; cursor: pointer; border-radius: 6px; border: none; background-color: #4CAF50; color: white; }
+    .hidden { display: none; }
+    .subsection { margin-left: 10px; margin-top: 10px; padding: 10px; border-left: 2px solid #aaa; background: #f9f9f9; border-radius: 6px; }
+    .subsection-header { cursor: pointer; background: #e2e2e2; padding: 8px; border-radius: 4px; font-weight: bold; }
+    .flex-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .flex-row label { flex: 1; }
+    p { margin: 5px 0; }
+    #totalCost { font-weight: bold; font-size: 18px; }
+  </style>
 </head>
-
 <body>
-<div class="container">
+
+<h1>Rat Club Exhibit Entry Form</h1>
+
 <form id="entryForm">
 
-    <!-- MEMBER INFO -->
-    <div class="card">
-        <h2>Member Information</h2>
+  <!-- Member Information -->
+  <div class="section">
+    <h2>Member Information</h2>
+    <label>Name or Stud Name*:
+      <input type="text" name="memberName" required>
+    </label>
+    <label>Email*:
+      <input type="email" name="memberEmail" required>
+    </label>
+    <label>Phone:
+      <input type="text" name="phone">
+    </label>
+    <label><input type="checkbox" name="lscmrcMember"> LSCMRC Member</label>
+    <label><input type="checkbox" name="junior"> Junior (under 16)</label>
+  </div>
 
-        <label>Name or Stud Name</label>
-        <input type="text" name="memberName" required />
-
-        <label>Email</label>
-        <input type="email" name="memberEmail" required />
-
-        <label>Phone</label>
-        <input type="text" name="memberPhone" />
-
-        <div class="checkbox-row">
-            <input type="checkbox" id="lscmrcMember" name="lscmrcMember" />
-            <label for="lscmrcMember">LSCMRC Member</label>
-        </div>
-
-        <div class="checkbox-row">
-            <input type="checkbox" id="junior" name="junior" />
-            <label for="junior">Junior (Under 16)</label>
-        </div>
+  <!-- Hire Tanks -->
+  <div class="section">
+    <h2>Hire Tanks</h2>
+    <label><input type="checkbox" id="hireTanksCheckbox" name="hireTanks"> Hire tanks required</label>
+    <div id="tankNumberDiv" class="hidden">
+      <label>Number of tanks (max 2) @ £1.50 each:
+        <input type="number" id="tankNumber" name="tankNumber" min="1" max="2" value="1">
+      </label>
+      <p>Tank Cost: £<span id="tankCost">1.50</span></p>
     </div>
+  </div>
 
-    <!-- TANK HIRE -->
-    <div class="card">
-        <h2>Hire Tanks</h2>
-        <div class="checkbox-row">
-            <input type="checkbox" id="hireTanks" name="hireTanks" />
-            <label for="hireTanks">Hire Tanks Required</label>
-        </div>
+  <!-- Show Entries -->
+  <div class="section">
+    <h2>Show Entries</h2>
+    <label><input type="checkbox" id="addVarietiesCheckbox"> Add Varieties</label>
+    <div id="varietiesContainer" class="hidden"></div>
+    <button type="button" id="addVarietyBtn" class="hidden">Add Another Exhibit</button>
+  </div>
 
-        <div id="tankNumberBox" style="display:none;">
-            <label>Number of Tanks (max 2)</label>
-            <input type="number" id="tankCount" name="tankCount" min="0" max="2" value="0" />
-        </div>
-    </div>
+  <!-- Pets -->
+  <div class="section">
+    <h2>Pets</h2>
+    <label><input type="checkbox" id="addPetsCheckbox"> Add Pets</label>
+    <div id="petsContainer" class="hidden"></div>
+    <button type="button" id="addPetBtn" class="hidden">Add Another Pet</button>
+  </div>
 
-    <!-- VARIETY EXHIBITS -->
-    <div class="card">
-        <h2>Show Entries – Varieties</h2>
-        <div class="checkbox-row">
-            <input type="checkbox" id="addVarieties" />
-            <label for="addVarieties">Add Varieties</label>
-        </div>
+  <!-- Additional Information -->
+  <div class="section">
+    <h2>Additional Information</h2>
+    <label>Other info:
+      <textarea name="otherInfo" rows="4"></textarea>
+    </label>
+  </div>
 
-        <div id="varietyList"></div>
-        <button class="add-btn" id="addVarietyBtn" type="button" style="display:none;">Add Another Variety</button>
-    </div>
+  <!-- Total Cost -->
+  <div class="section">
+    <p>Total Cost: £<span id="totalCost">0.00</span></p>
+  </div>
 
-    <!-- PET ENTRIES -->
-    <div class="card">
-        <h2>Pets</h2>
-        <div class="checkbox-row">
-            <input type="checkbox" id="addPets" />
-            <label for="addPets">Add Pets</label>
-        </div>
-
-        <div id="petList"></div>
-        <button class="add-btn" id="addPetBtn" type="button" style="display:none;">Add Another Pet</button>
-    </div>
-
-    <!-- ADDITIONAL INFO -->
-    <div class="card">
-        <h2>Additional Information</h2>
-        <textarea name="extraInfo" rows="4"></textarea>
-    </div>
-
-    <!-- TOTAL COST -->
-    <div class="card total-box" id="totalCostBox">
-        Total: £0.00
-        <!-- hidden field so EmailJS gets the total -->
-        <input type="hidden" name="total_cost" id="totalCostField" />
-    </div>
-
-    <!-- SUBMIT -->
-    <div class="card">
-        <button class="add-btn" type="submit">Submit Entry</button>
-    </div>
-
+  <button type="submit">Submit Entry</button>
 </form>
-</div>
 
-<!-- EmailJS library -->
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-/***************  EMAILJS SETUP  ***************/
-emailjs.init("3ZKJ9Faj6dDLhNh5Y"); // Public key
+  /*************** EMAILJS SETUP ***************/
+  emailjs.init('3ZKJ9Faj6dDLhNh5Y'); // Public ID
 
-const EMAILJS_SERVICE_ID = "service_51m2sqm";
-const EMAILJS_TEMPLATE_ID = "template_d3isckc";
+  const EMAILJS_SERVICE_ID = 'service_51m2sqm';
+  const EMAILJS_TEMPLATE_ID = 'template_d3isckc';
 
-/***************  COST + DYNAMIC FIELDS  ***************/
-let total = 0;
-const totalBox = document.getElementById('totalCostBox');
-const totalCostField = document.getElementById('totalCostField');
+  /*************** DOM ELEMENTS ***************/
+  const hireTanksCheckbox = document.getElementById('hireTanksCheckbox');
+  const tankNumberDiv = document.getElementById('tankNumberDiv');
+  const tankNumber = document.getElementById('tankNumber');
+  const tankCost = document.getElementById('tankCost');
+  const totalCostDisplay = document.getElementById('totalCost');
 
-function updateTotal() {
-    let cost = 0;
+  const addVarietiesCheckbox = document.getElementById('addVarietiesCheckbox');
+  const varietiesContainer = document.getElementById('varietiesContainer');
+  const addVarietyBtn = document.getElementById('addVarietyBtn');
 
-    // Tanks
-    const hire = document.getElementById('hireTanks').checked;
-    if (hire) {
-        const tanks = Number(document.getElementById('tankCount').value || 0);
-        cost += tanks * 1.5;
+  const addPetsCheckbox = document.getElementById('addPetsCheckbox');
+  const petsContainer = document.getElementById('petsContainer');
+  const addPetBtn = document.getElementById('addPetBtn');
+
+  /*************** TANK COST LOGIC ***************/
+  hireTanksCheckbox.addEventListener('change', () => {
+    tankNumberDiv.classList.toggle('hidden', !hireTanksCheckbox.checked);
+    updateTankCost();
+    updateTotalCost();
+  });
+
+  tankNumber.addEventListener('input', () => {
+    updateTankCost();
+    updateTotalCost();
+  });
+
+  function updateTankCost() {
+    const num = Math.min(Math.max(parseInt(tankNumber.value) || 1, 1), 2);
+    tankCost.innerText = (num * 1.5).toFixed(2);
+  }
+
+  /*************** VARIETIES LOGIC ***************/
+  addVarietiesCheckbox.addEventListener('change', () => {
+    varietiesContainer.classList.toggle('hidden', !addVarietiesCheckbox.checked);
+    addVarietyBtn.classList.toggle('hidden', !addVarietiesCheckbox.checked);
+    if (addVarietiesCheckbox.checked && varietiesContainer.children.length === 0) {
+      addVariety();
     }
+    updateTotalCost();
+  });
 
-    // Varieties – £1 per variety, +£1 if dual entry
-    document.querySelectorAll('.variety-entry').forEach(v => {
-        cost += 1; // base cost
-        const dual = v.querySelector('.dualCheck').checked;
-        if (dual) cost += 1; // dual entry cost
-    });
+  addVarietyBtn.addEventListener('click', () => {
+    addVariety();
+    updateTotalCost();
+  });
 
-    // Pets – £1 per pet
-    document.querySelectorAll('.pet-entry').forEach(p => {
-        cost += 1;
-    });
-
-    total = cost;
-    const text = `Total: £${total.toFixed(2)}`;
-    totalBox.textContent = text;
-    // re-append hidden input (since textContent clears children)
-    totalBox.appendChild(totalCostField);
-    totalCostField.value = total.toFixed(2);
-}
-
-// Variety handling
-const addVarieties = document.getElementById('addVarieties');
-const varietyList = document.getElementById('varietyList');
-const addVarietyBtn = document.getElementById('addVarietyBtn');
-
-addVarieties.addEventListener('change', () => {
-    if (addVarieties.checked) {
-        addVarietyBtn.style.display = 'block';
-        if (!varietyList.children.length) {
-            addVariety();
-        }
-    } else {
-        varietyList.innerHTML = '';
-        addVarietyBtn.style.display = 'none';
-        updateTotal();
-    }
-});
-
-function addVariety() {
-    const index = varietyList.children.length;
+  function addVariety() {
     const div = document.createElement('div');
-    div.className = 'card variety-entry';
+    div.className = 'subsection';
+    const index = varietiesContainer.children.length;
+
     div.innerHTML = `
-        <label>Rat Name</label>
-        <input type="text" name="varietyName_${index}" />
-        <label>Age</label>
-        <select name="varietyAge_${index}">
-            <option value="Adult">Adult (14+ weeks)</option>
-            <option value="Kitten">Kitten (under 14 weeks)</option>
-        </select>
-        <label>Sex</label>
-        <select name="varietySex_${index}">
-            <option value="Doe">Doe</option>
-            <option value="Buck">Buck</option>
-        </select>
-        <div class="checkbox-row">
-            <input type="checkbox" class="dualCheck" name="varietyDual_${index}" id="varietyDual_${index}" />
-            <label for="varietyDual_${index}">Dual Entry (Pets)</label>
+      <div class="subsection-header">Exhibit ${index + 1} (click to toggle)</div>
+      <div class="subsection-content">
+        <label>Rat Name:
+          <input type="text" name="ratName${index}">
+        </label>
+        <div class="flex-row">
+          <label>Age:
+            <input type="radio" name="age${index}" value="Adult"> Adult
+            <input type="radio" name="age${index}" value="Kitten"> Kitten
+          </label>
+          <label>Sex:
+            <input type="radio" name="sex${index}" value="Doe"> Doe
+            <input type="radio" name="sex${index}" value="Buck"> Buck
+          </label>
         </div>
+        <label>Section:
+          <select name="section${index}" class="sectionSelect">
+            <option value="">Select Section</option>
+            <option value="Provisional Standard">Provisional Standard</option>
+            <option value="Self">Self</option>
+            <option value="Marked">Marked</option>
+            <option value="Russian">Russian</option>
+            <option value="Shaded">Shaded</option>
+            <option value="AOV">AOV</option>
+            <option value="Rex">Rex</option>
+            <option value="Dumbo">Dumbo</option>
+            <option value="Guide Standard">Guide Standard</option>
+          </select>
+        </label>
+        <label>Class:
+          <select name="class${index}" class="classSelect"><option value="">Select Section first</option></select>
+        </label>
+        <label><input type="checkbox" name="novice${index}"> Novice</label>
+        <label><input type="checkbox" name="dualEntry${index}"> Dual Entry (Pets)</label>
+      </div>
     `;
-    varietyList.appendChild(div);
-    div.querySelector('.dualCheck').addEventListener('change', updateTotal);
-    updateTotal();
-}
-addVarietyBtn.addEventListener('click', addVariety);
 
-// Pets handling
-const addPets = document.getElementById('addPets');
-const petList = document.getElementById('petList');
-const addPetBtn = document.getElementById('addPetBtn');
+    varietiesContainer.appendChild(div);
 
-addPets.addEventListener('change', () => {
-    if (addPets.checked) {
-        addPetBtn.style.display = 'block';
-        if (!petList.children.length) {
-            addPet();
-        }
-    } else {
-        petList.innerHTML = '';
-        addPetBtn.style.display = 'none';
-        updateTotal();
-    }
-});
+    const header = div.querySelector('.subsection-header');
+    const content = div.querySelector('.subsection-content');
+    content.style.display = 'block';
 
-function addPet() {
-    const index = petList.children.length;
-    const div = document.createElement('div');
-    div.className = 'card pet-entry';
-    div.innerHTML = `
-        <label>Rat Name</label>
-        <input type="text" name="petName_${index}" />
-        <label>Section</label>
-        <select name="petSection_${index}">
-            <option value="Adult Owned">Adult Owned</option>
-            <option value="Junior Owned">Junior Owned</option>
-            <option value="Breeder Owned">Breeder Owned</option>
-        </select>
-        <label>Sex</label>
-        <select name="petSex_${index}">
-            <option value="Buck">Buck</option>
-            <option value="Doe">Doe</option>
-        </select>
-    `;
-    petList.appendChild(div);
-    updateTotal();
-}
-addPetBtn.addEventListener('click', addPet);
+    header.addEventListener('click', () => {
+      content.style.display = (content.style.display === 'none') ? 'block' : 'none';
+    });
 
-// Tanks
-const hireTanks = document.getElementById('hireTanks');
-hireTanks.addEventListener('change', () => {
-    document.getElementById('tankNumberBox').style.display = hireTanks.checked ? 'block' : 'none';
-    updateTotal();
-});
+    const sectionSelect = div.querySelector('.sectionSelect');
+    const classSelect = div.querySelector('.classSelect');
 
-document.getElementById('tankCount').addEventListener('input', updateTotal);
+    sectionSelect.addEventListener('change', () => {
+      const options = getClassOptions(sectionSelect.value);
+      classSelect.innerHTML = '';
+      options.forEach(opt => {
+        const o = document.createElement('option');
+        o.value = opt;
+        o.innerText = opt;
+        classSelect.appendChild(o);
+      });
+    });
 
-/***************  FORM SUBMISSION (EMAILJS)  ***************/
-const form = document.getElementById('entryForm');
+    updateTotalCost();
+  }
 
-form.addEventListener('submit', function (event) {
-    event.preventDefault();
+  function getClassOptions(section) {
+    const data = {
+      "Provisional Standard": ["Bareback","Chestnut","Cinnamon Chinchilla","Copper","Dwarf","Merle","Pink Eyed Ivory","Powder Blue","Tonkinese (Self type)","Tonkinese (Agouti type)","Variegated Downunder"],
+      "Self": ["Pink Eyed White","Champagne","Buff","Platinum","Quicksilver","British Blue","Black Chocolate","Mink","Ivory","Lilac"],
+      "Marked": ["Berkshire/Badger","Irish","Hooded","Variegated","Capped","Essex","Chinchilla","Squirrel","Roan/Striped Roan"],
+      "Russian": ["Russian Blue","Russian Dove","Russian Buff","Russian Blue Agouti","Russian Dove Agouti","Russian Silver","Russian Topaz"],
+      "Shaded": ["Argente Crème","Himalayan","Siamese","Blue Point Siamese","Burmese","Wheaten Burmese","Golden Himalayan","Golden Siamese","Marten","Silver Agouti","Cream Agouti"],
+      "AOV": ["Cream","Topaz"]()
 
-    emailjs
-        .sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
-        .then(() => {
-            alert('Entry submitted successfully!');
-            // Reset form & dynamic bits
-            form.reset();
-            varietyList.innerHTML = '';
-            petList.innerHTML = '';
-            document.getElementById('tankNumberBox').style.display = 'none';
-            addVarietyBtn.style.display = 'none';
-            addPetBtn.style.display = 'none';
-            updateTotal();
-        })
-        .catch((error) => {
-            console.error(error);
-            alert('Submission failed – please try again or contact the show secretary.');
-        });
-});
-
-// Initialise total field on first load
-updateTotal();
-</script>
-
-</body>
-</html>
 
