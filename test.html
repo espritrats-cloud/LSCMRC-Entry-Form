@@ -173,6 +173,12 @@
     `;
     varietiesContainer.appendChild(div);
 
+    // NEW: recalc when dual entry is toggled
+    const dualCheckbox = div.querySelector('input[name^="dualEntry"]');
+    if (dualCheckbox) {
+      dualCheckbox.addEventListener('change', updateTotalCost);
+    }
+
     const header = div.querySelector('.subsection-header');
     const content = div.querySelector('.subsection-content');
     content.style.display = 'block';
