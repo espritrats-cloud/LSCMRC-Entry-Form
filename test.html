@@ -217,6 +217,101 @@
       "Marked": ["Berkshire/Badger","Irish","Hooded","Variegated","Capped","Essex","Chinchilla","Squirrel","Roan/Striped Roan"],
       "Russian": ["Russian Blue","Russian Dove","Russian Buff","Russian Blue Agouti","Russian Dove Agouti","Russian Silver","Russian Topaz"],
       "Shaded": ["Argente Crème","Himalayan","Siamese","Blue Point Siamese","Burmese","Wheaten Burmese","Golden Himalayan","Golden Siamese","Marten","Silver Agouti","Cream Agouti"],
-      "AOV": ["Cream","Topaz"]()
+      "AOV": ["Cream","Topaz","Silver Fawn","Silver","Agouti","Cinnamon","British Blue Agouti","Lilac Agouti","Pearl","Cinnamon Pearl","Platinum Agouti"],
+      "Rex": ["Self","Marked","Russian","Shaded","AOV"],
+      "Dumbo": ["Self","Marked","Russian","Shaded","AOV","Rex"],
+      "Guide Standard": ["Blue Point Himalayan","Russian Burmese","Russian Silver Agouti","Sable Burmese","Spotted Down Under","Silken"]
+    };
+    return data[section] || [];
+  }
 
+  /*************** PETS LOGIC ***************/
+  addPetsCheckbox.addEventListener('change', () => {
+    petsContainer.classList.toggle('hidden', !addPetsCheckbox.checked);
+    addPetBtn.classList.toggle('hidden', !addPetsCheckbox.checked);
+    if (addPetsCheckbox.checked && petsContainer.children.length === 0) addPet();
+    updateTotalCost();
+  });
 
+  addPetBtn.addEventListener('click', () => {
+    addPet();
+    updateTotalCost();
+  });
+
+  function addPet() {
+    const div = document.createElement('div');
+    div.className = 'subsection';
+    const index = petsContainer.children.length;
+    div.innerHTML = `
+      <div class="subsection-header">Pet ${index + 1} (click to toggle)</div>
+      <div class="subsection-content">
+        <label>Rat Name:
+          <input type="text" name="petName${index}">
+        </label>
+        <label>Section:
+          <select name="petSection${index}">
+            <option value="">Select Section</option>
+            <option value="Adult Owned">Adult Owned</option>
+            <option value="Junior Owned">Junior Owned</option>
+            <option value="Breeder Owned">Breeder Owned</option>
+          </select>
+        </label>
+        <label>Sex:
+          <input type="radio" name="petSex${index}" value="Buck"> Buck
+          <input type="radio" name="petSex${index}" value="Doe"> Doe
+        </label>
+      </div>
+    `;
+    petsContainer.appendChild(div);
+
+    const header = div.querySelector('.subsection-header');
+    const content = div.querySelector('.subsection-content');
+    content.style.display = 'block';
+    header.addEventListener('click', () => {
+      content.style.display = (content.style.display === 'none') ? 'block' : 'none';
+    });
+
+    updateTotalCost();
+  }
+
+  /*************** TOTAL COST (includes dual entry) ***************/
+  function updateTotalCost() {
+    let total = 0;
+
+    // Tanks: £1.50 each, max 2
+    if (hireTanksCheckbox.checked) {
+      total += Math.min(parseInt(tankNumber.value) || 0, 2) * 1.5;
+    }
+
+    // £1 per variety
+    total += varietiesContainer.children.length;
+
+    // £1 per pet
+    total += petsContainer.children.length;
+
+    // EXTRA £1 for each dualEntry checkbox ticked
+    const dualChecks = document.querySelectorAll('input[name^="dualEntry"]');
+    dualChecks.forEach(cb => {
+      if (cb.checked) total += 1;
+    });
+
+    totalCostDisplay.innerText = total.toFixed(2);
+  }
+
+  /*************** EMAILJS FORM SUBMISSION ***************/
+  document.getElementById('entryForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
+      .then(() => {
+        alert('Entry submitted successfully!');
+      })
+      .catch((error) => {
+        alert('Submission failed: ' + JSON.stringify(error));
+      });
+  });
+
+</script>
+
+</body>
+</html>
