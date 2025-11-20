@@ -186,64 +186,46 @@
       font-size: 14px;
     }
 
-    button[type=button] + button[type=button] {
-      margin-left: 8px;
-    }
-
-    .helper-text {
-      font-size: 0.8rem;
-      color: #666;
-      margin-top: 6px;
-    }
-
     .hidden {
       display: none;
     }
 
-    /* Mobile tweaks */
-    @media (max-width: 600px) {
-      .form-card {
-        padding: 24px 18px 20px;
-      }
-      .two-col {
-        grid-template-columns: 1fr;
-      }
-      .form-header img {
-        max-width: 220px;
-      }
+    /* ------------------------------- */
+    /* BOLD Exhibitor Details labels */
+    /* ------------------------------- */
+    .exhibitor-bold label span {
+      font-weight: bold;
     }
   </style>
 </head>
+
 <body>
   <div class="form-shell">
     <form id="entryForm" class="form-card">
       <div class="form-header">
-        <!-- your logo file in the repo root -->
         <img src="savingPNG.png" alt="LSCMRC logo" />
         <h1 class="form-title">LSCMRC ENTRIES - RATS</h1>
         <p class="form-subtitle">
-          The Rat Show Secretary will send you confirmation of your entries via email when the
-          entries have been entered onto the show program. Entries close at 10pm on the Wednesday
-          prior to the show.
+          The Rat Show Secretary will send you confirmation of your entries via email…
         </p>
       </div>
 
       <!-- Member Information -->
-      <div class="section">
+      <div class="section exhibitor-bold">
         <h2>Exhibitor details</h2>
 
         <div class="two-col">
-          <label>Name or Stud Name*:
+          <label><span>Name or Stud Name*:</span>
             <input type="text" name="memberName" required />
           </label>
 
-          <label>Email*:
+          <label><span>Email*:</span>
             <input type="email" name="memberEmail" required />
           </label>
         </div>
 
         <div class="two-col">
-          <label>Phone:
+          <label><span>Phone:</span>
             <input type="text" name="phone" />
           </label>
 
