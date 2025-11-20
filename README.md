@@ -61,4 +61,4 @@ All of this is sent in a formatted email to the show secretary, including a full
    cd LSCMRC-Entry-Form
    
 ## 🐀 Credits
-Built for the **LSCMRC** by Samantha & Michelle to simplify rat show entries and reduce manual admin work.
+Built for the **LSCMRC** by Samantha to simplify rat show entries and reduce manual admin work.
