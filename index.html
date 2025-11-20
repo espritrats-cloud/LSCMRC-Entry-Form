@@ -276,18 +276,31 @@
   }
 
   /*************** Total cost ***************/
-  function updateTotalCost() {
+ function updateTotalCost() {
     let total = 0;
 
+    // Tanks: £1.50 each, max 2
     if (hireTanksCheckbox.checked) {
-      total += Math.min(parseInt(tankNumber.value) || 1, 2) * 1.5;
+        total += Math.min(parseInt(tankNumber.value) || 1, 2) * 1.5;
     }
 
-    total += varietiesContainer.children.length + petsContainer.children.length;
+    // Varieties: £1 per entry
+    const varietyCards = varietiesContainer.children;
+    total += varietyCards.length;
+
+    // Extra £1 for each Dual Entry (Pets) ticked
+    for (let i = 0; i < varietyCards.length; i++) {
+        const dualCheckbox = varietyCards[i].querySelector('input[type="checkbox"][name^="dualEntry"]');
+        if (dualCheckbox && dualCheckbox.checked) {
+            total += 1;
+        }
+    }
+
+    // Pets: £1 per pet
+    total += petsContainer.children.length;
 
     totalCostDisplay.innerText = total.toFixed(2);
-  }
-
+}
   /*************** EmailJS submission ***************/
   document.getElementById('entryForm')
     .addEventListener('submit', function(event) {
