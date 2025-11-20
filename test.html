@@ -109,17 +109,31 @@
   const addPetBtn = document.getElementById('addPetBtn');
 
   /*************** Tank cost logic ***************/
-  hireTanksCheckbox.addEventListener('change', () => {
-    tankNumberDiv.classList.toggle('hidden', !hireTanksCheckbox.checked);
-    updateTankCost();
-    updateTotalCost();
-  });
-  tankNumber.addEventListener('input', () => { updateTankCost(); updateTotalCost(); });
+hireTanksCheckbox.addEventListener('change', () => {
+  const checked = hireTanksCheckbox.checked;
+  tankNumberDiv.classList.toggle('hidden', !checked);
 
-  function updateTankCost() {
-    const num = Math.min(Math.max(parseInt(tankNumber.value) || 1, 1), 2);
-    tankCost.innerText = (num * 1.5).toFixed(2);
+  if (!checked) {
+    tankNumber.value = '';
+    tankCost.innerText = '0.00';
+  } else {
+    if (!tankNumber.value) tankNumber.value = 1;
+    updateTankCost();
   }
+
+  updateTotalCost();
+});
+
+tankNumber.addEventListener('input', () => {
+  updateTankCost();
+  updateTotalCost();
+});
+
+function updateTankCost() {
+  const num = Math.min(Math.max(parseInt(tankNumber.value) || 1, 1), 2);
+  tankCost.innerText = (num * 1.5).toFixed(2);
+}
+
 
   /*************** Varieties logic ***************/
   addVarietiesCheckbox.addEventListener('change', () => {
