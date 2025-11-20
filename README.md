@@ -48,8 +48,10 @@ All of this is sent in a formatted email to the show secretary, including a full
 
 ##  Project structure
 
-- `index.html` – main entry form used by exhibitors  
-- `test.html` – (optional) test page for trying out UI/changes before changing the main form
+## Files
+
+- `index.html` – live show entry form (used by GitHub Pages)
+- `test.html` – development/test copy. Changes are tested here first, then copied into `index.html` when confirmed.
 
 ---
 
