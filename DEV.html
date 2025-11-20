@@ -376,18 +376,24 @@ The Rat Show Secretary will send you confirmation of your entries via email when
 
     /*************** Varieties logic ***************/
     addVarietiesCheckbox.addEventListener('change', () => {
-      varietiesContainer.classList.toggle('hidden', !addVarietiesCheckbox.checked);
-      addVarietyBtn.classList.toggle('hidden', !addVarietiesCheckbox.checked);
-      if (addVarietiesCheckbox.checked && varietiesContainer.children.length === 0) {
-        addVariety();
-      }
-      updateTotalCost();
-    });
+  const checked = addVarietiesCheckbox.checked;
 
-    addVarietyBtn.addEventListener('click', () => {
+  // Show/hide the UI
+  varietiesContainer.classList.toggle('hidden', !checked);
+  addVarietyBtn.classList.toggle('hidden', !checked);
+
+  if (checked) {
+    // If just turned on and there are no exhibits yet, add one
+    if (varietiesContainer.children.length === 0) {
       addVariety();
-      updateTotalCost();
-    });
+    }
+  } else {
+    // If turned off, remove all exhibits so they don't count towards cost
+    varietiesContainer.innerHTML = '';
+  }
+
+  updateTotalCost();
+});
 
     function addVariety() {
       const div = document.createElement('div');
@@ -477,12 +483,25 @@ The Rat Show Secretary will send you confirmation of your entries via email when
     }
 
     /*************** Pets logic ***************/
-    addPetsCheckbox.addEventListener('change', () => {
-      petsContainer.classList.toggle('hidden', !addPetsCheckbox.checked);
-      addPetBtn.classList.toggle('hidden', !addPetsCheckbox.checked);
-      if (addPetsCheckbox.checked && petsContainer.children.length === 0) addPet();
-      updateTotalCost();
-    });
+   addPetsCheckbox.addEventListener('change', () => {
+  const checked = addPetsCheckbox.checked;
+
+  // Show/hide the UI
+  petsContainer.classList.toggle('hidden', !checked);
+  addPetBtn.classList.toggle('hidden', !checked);
+
+  if (checked) {
+    // If just turned on and there are no pets yet, add one
+    if (petsContainer.children.length === 0) {
+      addPet();
+    }
+  } else {
+    // If turned off, remove all pets so they don't count towards cost
+    petsContainer.innerHTML = '';
+  }
+
+  updateTotalCost();
+});
 
     addPetBtn.addEventListener('click', () => { addPet(); updateTotalCost(); });
 
