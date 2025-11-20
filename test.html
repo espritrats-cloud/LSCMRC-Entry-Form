@@ -88,7 +88,7 @@
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
   /***************  EMAILJS SETUP  ***************/
-  emailjs.init('3ZKJ9Faj6dDLhNh5Y'); // public key
+   emailjs.init('3ZKJ9Faj6dDLhNh5Y'); // public key
 
   const EMAILJS_SERVICE_ID = 'service_51m2sqm';
   const EMAILJS_TEMPLATE_ID = 'template_d3isckc';
@@ -109,45 +109,61 @@
   const addPetBtn = document.getElementById('addPetBtn');
 
   /*************** Tank cost logic ***************/
-hireTanksCheckbox.addEventListener('change', () => {
-  const checked = hireTanksCheckbox.checked;
-  tankNumberDiv.classList.toggle('hidden', !checked);
+ hireTanksCheckbox.addEventListener('change', () => {
+    const checked = hireTanksCheckbox.checked;
+    tankNumberDiv.classList.toggle('hidden', !checked);
 
-  if (!checked) {
-    tankNumber.value = '';
-    tankCost.innerText = '0.00';
-  } else {
-    if (!tankNumber.value) tankNumber.value = 1;
+    if (!checked) {
+      // no hire tanks – clear the value so EmailJS doesn't see "1"
+      tankNumber.value = '';
+      tankCost.innerText = '0.00';
+    } else {
+      // when turning it on, default to 1 tank if it's empty
+      if (!tankNumber.value) tankNumber.value = 1;
+      updateTankCost();
+    }
+
+    updateTotalCost();
+  });
+
+  tankNumber.addEventListener('input', () => {
     updateTankCost();
+    updateTotalCost();
+  });
+
+  function updateTankCost() {
+    // clamp between 1 and 2 tanks if something is entered
+    let num = parseInt(tankNumber.value);
+    if (isNaN(num)) {
+      tankCost.innerText = '0.00';
+      return;
+    }
+    num = Math.min(Math.max(num, 1), 2);
+    tankNumber.value = num;
+    tankCost.innerText = (num * 1.5).toFixed(2);
   }
-
-  updateTotalCost();
-});
-
-tankNumber.addEventListener('input', () => {
-  updateTankCost();
-  updateTotalCost();
-});
-
-function updateTankCost() {
-  const num = Math.min(Math.max(parseInt(tankNumber.value) || 1, 1), 2);
-  tankCost.innerText = (num * 1.5).toFixed(2);
-}
 
 
   /*************** Varieties logic ***************/
   addVarietiesCheckbox.addEventListener('change', () => {
     varietiesContainer.classList.toggle('hidden', !addVarietiesCheckbox.checked);
     addVarietyBtn.classList.toggle('hidden', !addVarietiesCheckbox.checked);
-    if(addVarietiesCheckbox.checked && varietiesContainer.children.length === 0) addVariety();
+    if (addVarietiesCheckbox.checked && varietiesContainer.children.length === 0) {
+      addVariety();
+    }
     updateTotalCost();
   });
-  addVarietyBtn.addEventListener('click', () => { addVariety(); updateTotalCost(); });
+
+  addVarietyBtn.addEventListener('click', () => {
+    addVariety();
+    updateTotalCost();
+  });
 
   function addVariety() {
     const div = document.createElement('div');
     div.className = 'subsection';
     const index = varietiesContainer.children.length;
+
     div.innerHTML = `
       <div class="subsection-header">Exhibit ${index + 1} (click to toggle)</div>
       <div class="subsection-content">
@@ -187,16 +203,12 @@ function updateTankCost() {
     `;
     varietiesContainer.appendChild(div);
 
-    // NEW: recalc when dual entry is toggled
-    const dualCheckbox = div.querySelector('input[name^="dualEntry"]');
-    if (dualCheckbox) {
-      dualCheckbox.addEventListener('change', updateTotalCost);
-    }
-
     const header = div.querySelector('.subsection-header');
     const content = div.querySelector('.subsection-content');
     content.style.display = 'block';
-    header.addEventListener('click', () => { content.style.display = content.style.display === 'none' ? 'block' : 'none'; });
+    header.addEventListener('click', () => {
+      content.style.display = content.style.display === 'none' ? 'block' : 'none';
+    });
 
     const sectionSelect = div.querySelector('.sectionSelect');
     const classSelect = div.querySelector('.classSelect');
@@ -205,10 +217,17 @@ function updateTankCost() {
       classSelect.innerHTML = '';
       options.forEach(opt => {
         const o = document.createElement('option');
-        o.value = opt; o.innerText = opt;
+        o.value = opt;
+        o.innerText = opt;
         classSelect.appendChild(o);
       });
     });
+
+    // NEW: recalc when dual entry is toggled
+    const dualCheckbox = div.querySelector('input[name^="dualEntry"]');
+    if (dualCheckbox) {
+      dualCheckbox.addEventListener('change', updateTotalCost);
+    }
 
     updateTotalCost();
   }
@@ -229,12 +248,13 @@ function updateTankCost() {
   }
 
   /*************** Pets logic ***************/
-  addPetsCheckbox.addEventListener('change', () => {
+   addPetsCheckbox.addEventListener('change', () => {
     petsContainer.classList.toggle('hidden', !addPetsCheckbox.checked);
     addPetBtn.classList.toggle('hidden', !addPetsCheckbox.checked);
-    if(addPetsCheckbox.checked && petsContainer.children.length === 0) addPet();
+    if (addPetsCheckbox.checked && petsContainer.children.length === 0) addPet();
     updateTotalCost();
   });
+
   addPetBtn.addEventListener('click', () => { addPet(); updateTotalCost(); });
 
   function addPet() {
@@ -266,11 +286,12 @@ function updateTankCost() {
     const header = div.querySelector('.subsection-header');
     const content = div.querySelector('.subsection-content');
     content.style.display = 'block';
-    header.addEventListener('click', () => { content.style.display = content.style.display === 'none' ? 'block' : 'none'; });
+    header.addEventListener('click', () => {
+      content.style.display = content.style.display === 'none' ? 'block' : 'none';
+    });
 
     updateTotalCost();
   }
-
   /*************** Total cost (with dual entry) ***************/
   function updateTotalCost() {
     let total = 0;
@@ -293,13 +314,12 @@ function updateTankCost() {
   }
 
   /*************** Form submission via EmailJS ***************/
-  document.getElementById('entryForm').addEventListener('submit', function(event){
+   document.getElementById('entryForm').addEventListener('submit', function(event){
     event.preventDefault();
     emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
       .then(() => { alert('Entry submitted successfully!'); },
             (error) => { alert('Submission failed: ' + JSON.stringify(error)); });
   });
-
 </script>
 
 </body>
