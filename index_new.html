@@ -1,535 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Rat Club Entry Form</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    :root {
-      --border-radius: 8px;
-      --spacing: 10px;
-      --section-spacing: 20px;
-      --accent: #4CAF50;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LSCMRC Entry Form – Modern UI</title>
+<style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 10px;
-      max-width: 900px;
-      margin: 0 auto;
-      background: #f5f5f5;
+        font-family: Arial, sans-serif !important;
+        background:#f5f5f5;
+        margin:0;
+        padding:20px;
     }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 15px;
+    .container {
+        max-width:900px;
+        margin:auto;
     }
-
+    .card {
+        background:white;
+        border-radius:16px;
+        padding:20px;
+        margin-bottom:20px;
+        box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    }
     h2 {
-      margin: 0 0 10px 0;
+        margin-top:0;
     }
-
-    form {
-      margin-bottom: 40px;
+    label { display:block; margin-bottom:6px; font-weight: normal; text-align:left; }
+    input, select, textarea {
+        width:100%;
+        padding:10px;
+        margin-top:5px;
+        border-radius:8px;
+        border:1px solid #ccc;
+        font-size:1rem;
     }
-
-    .section {
-      margin-bottom: var(--section-spacing);
-      padding: 15px;
-      border: 1px solid #ccc;
-      border-radius: var(--border-radius);
-      background: #fff;
+    .checkbox-row {
+        display:flex;
+        gap:10px;
+        align-items:center;
+        margin-top:10px;
     }
-
-    .section p {
-      margin: 5px 0;
+    .checkbox-row label {
+        margin:0;
     }
-
-    /* Generic label / input alignment */
-    label {
-      display: block;
-      margin-top: var(--spacing);
-      font-size: 0.95rem;
+    .add-btn {
+        background:#0066ff;
+        color:white;
+        padding:10px 16px;
+        border:none;
+        border-radius:10px;
+        cursor:pointer;
+        margin-top:15px;
+        font-size:1rem;
     }
-
-    input[type=text],
-    input[type=email],
-    input[type=number],
-    select,
-    textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border-radius: 4px;
-      border: 1px solid #bbb;
-      font-size: 0.95rem;
+    .add-btn:hover { background:#004ccc; }
+    .total-box {
+        background:#e8f0ff;
+        padding:15px;
+        border-radius:12px;
+        font-size:1.2rem;
+        text-align:center;
     }
-
-    textarea {
-      resize: vertical;
-    }
-
-    /* Inline checkbox / radio text alignment */
-    .inline-options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 5px;
-      align-items: center;
-    }
-
-    .inline-options label {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      margin: 0;
-      font-size: 0.95rem;
-    }
-
-    button {
-      margin-top: 10px;
-      padding: 10px 16px;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 6px;
-      border: none;
-      background-color: var(--accent);
-      color: white;
-    }
-
-    button[type="submit"] {
-      width: 100%;
-      max-width: 260px;
-      display: block;
-      margin: 15px auto 0;
-      font-weight: bold;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .subsection {
-      margin-top: 10px;
-      padding: 10px;
-      border-left: 3px solid #aaa;
-      background: #f9f9f9;
-      border-radius: 6px;
-    }
-
-    .subsection-header {
-      cursor: pointer;
-      background: #e2e2e2;
-      padding: 8px;
-      border-radius: 4px;
-      font-weight: bold;
-      margin: -10px -10px 10px -10px;
-    }
-
-    .subsection-content {
-      padding-top: 5px;
-    }
-
-    .flex-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: flex-start;
-    }
-
-    .flex-row > div {
-      flex: 1 1 200px;
-    }
-
-    #totalCost {
-      font-weight: bold;
-      font-size: 18px;
-    }
-
-    @media (max-width: 600px) {
-      body {
-        padding: 8px;
-      }
-    }
-  </style>
+</style>
 </head>
+
 <body>
-
-<h1>Rat Club Exhibit Entry Form</h1>
-
+<div class="container">
 <form id="entryForm">
 
-  <!-- Member Information -->
-  <div class="section">
-    <h2>Member Information</h2>
+    <!-- MEMBER INFO -->
+    <div class="card">
+        <h2>Member Information</h2>
 
-    <label>Name or Stud Name*:
-      <input type="text" name="memberName" required>
-    </label>
+        <label>Name or Stud Name</label>
+        <input type="text" name="memberName" required />
 
-    <label>Email*:
-      <input type="email" name="memberEmail" required>
-    </label>
+        <label>Email</label>
+        <input type="email" name="memberEmail" required />
 
-    <label>Phone:
-      <input type="text" name="phone">
-    </label>
+        <label>Phone</label>
+        <input type="text" name="memberPhone" />
 
-    <div class="inline-options">
-      <label>
-        <input type="checkbox" name="lscmrcMember">
-        LSCMRC Member
-      </label>
-      <label>
-        <input type="checkbox" name="junior">
-        Junior (under 16)
-      </label>
+        <div class="checkbox-row">
+            <input type="checkbox" id="lscmrcMember" name="lscmrcMember" />
+            <label for="lscmrcMember">LSCMRC Member</label>
+        </div>
+
+        <div class="checkbox-row">
+            <input type="checkbox" id="junior" name="junior" />
+            <label for="junior">Junior (Under 16)</label>
+        </div>
     </div>
-  </div>
 
-  <!-- Hire Tanks -->
-  <div class="section">
-    <h2>Hire Tanks</h2>
+    <!-- TANK HIRE -->
+    <div class="card">
+        <h2>Hire Tanks</h2>
+        <div class="checkbox-row">
+            <input type="checkbox" id="hireTanks" name="hireTanks" />
+            <label for="hireTanks">Hire Tanks Required</label>
+        </div>
 
-    <label class="inline-options">
-      <span>
-        <input type="checkbox" id="hireTanksCheckbox" name="hireTanks">
-      </span>
-      <span>Hire tanks required</span>
-    </label>
-
-    <div id="tankNumberDiv" class="hidden">
-      <label>Number of tanks (max 2) @ £1.50 each:
-        <input type="number" id="tankNumber" name="tankNumber" min="1" max="2" value="1">
-      </label>
-      <p>Tank Cost: £<span id="tankCost">1.50</span></p>
+        <div id="tankNumberBox" style="display:none;">
+            <label>Number of Tanks (max 2)</label>
+            <input type="number" id="tankCount" name="tankCount" min="0" max="2" value="0" />
+        </div>
     </div>
-  </div>
 
-  <!-- Show Entries -->
-  <div class="section">
-    <h2>Show Entries</h2>
+    <!-- VARIETY EXHIBITS -->
+    <div class="card">
+        <h2>Show Entries – Varieties</h2>
+        <div class="checkbox-row">
+            <input type="checkbox" id="addVarieties" />
+            <label for="addVarieties">Add Varieties</label>
+        </div>
 
-    <label class="inline-options">
-      <span>
-        <input type="checkbox" id="addVarietiesCheckbox">
-      </span>
-      <span>Add Varieties</span>
-    </label>
+        <div id="varietyList"></div>
+        <button class="add-btn" id="addVarietyBtn" type="button" style="display:none;">Add Another Variety</button>
+    </div>
 
-    <div id="varietiesContainer" class="hidden"></div>
+    <!-- PET ENTRIES -->
+    <div class="card">
+        <h2>Pets</h2>
+        <div class="checkbox-row">
+            <input type="checkbox" id="addPets" />
+            <label for="addPets">Add Pets</label>
+        </div>
 
-    <button type="button" id="addVarietyBtn" class="hidden">Add Another Exhibit</button>
-  </div>
+        <div id="petList"></div>
+        <button class="add-btn" id="addPetBtn" type="button" style="display:none;">Add Another Pet</button>
+    </div>
 
-  <!-- Pets -->
-  <div class="section">
-    <h2>Pets</h2>
+    <!-- ADDITIONAL INFO -->
+    <div class="card">
+        <h2>Additional Information</h2>
+        <textarea name="extraInfo" rows="4"></textarea>
+    </div>
 
-    <label class="inline-options">
-      <span>
-        <input type="checkbox" id="addPetsCheckbox">
-      </span>
-      <span>Add Pets</span>
-    </label>
+    <!-- TOTAL COST -->
+    <div class="card total-box" id="totalCostBox">
+        Total: £0.00
+        <!-- hidden field so EmailJS gets the total -->
+        <input type="hidden" name="total_cost" id="totalCostField" />
+    </div>
 
-    <div id="petsContainer" class="hidden"></div>
+    <!-- SUBMIT -->
+    <div class="card">
+        <button class="add-btn" type="submit">Submit Entry</button>
+    </div>
 
-    <button type="button" id="addPetBtn" class="hidden">Add Another Pet</button>
-  </div>
-
-  <!-- Additional Information -->
-  <div class="section">
-    <h2>Additional Information</h2>
-    <label>Other info:
-      <textarea name="otherInfo" rows="4"></textarea>
-    </label>
-  </div>
-
-  <!-- Total Cost -->
-  <div class="section">
-    <p>Total Cost: £<span id="totalCost">0.00</span></p>
-  </div>
-
-  <button type="submit">Submit Entry</button>
 </form>
+</div>
 
-<!-- EmailJS -->
+<!-- EmailJS library -->
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-  /***************  EMAILJS SETUP  ***************
-   * Ask her for:
-   *  - EmailJS Public Key  → goes in emailjs.init()
-   *  - Service ID          → sendForm() first argument
-   *  - Template ID         → sendForm() second argument
-   ************************************************/
+/***************  EMAILJS SETUP  ***************/
+emailjs.init("3ZKJ9Faj6dDLhNh5Y"); // Public key
 
-  // TODO: replace these three strings with her real values
-  const EMAILJS_PUBLIC_KEY = "REPLACE_ME_PUBLIC_KEY";
-  const EMAILJS_SERVICE_ID = "REPLACE_ME_SERVICE_ID";
-  const EMAILJS_TEMPLATE_ID = "REPLACE_ME_TEMPLATE_ID";
+const EMAILJS_SERVICE_ID = "service_51m2sqm";
+const EMAILJS_TEMPLATE_ID = "template_d3isckc";
 
-  emailjs.init(EMAILJS_PUBLIC_KEY);
+/***************  COST + DYNAMIC FIELDS  ***************/
+let total = 0;
+const totalBox = document.getElementById('totalCostBox');
+const totalCostField = document.getElementById('totalCostField');
 
-  // DOM elements
-  const hireTanksCheckbox = document.getElementById('hireTanksCheckbox');
-  const tankNumberDiv = document.getElementById('tankNumberDiv');
-  const tankNumber = document.getElementById('tankNumber');
-  const tankCost = document.getElementById('tankCost');
-  const totalCostDisplay = document.getElementById('totalCost');
+function updateTotal() {
+    let cost = 0;
 
-  const addVarietiesCheckbox = document.getElementById('addVarietiesCheckbox');
-  const varietiesContainer = document.getElementById('varietiesContainer');
-  const addVarietyBtn = document.getElementById('addVarietyBtn');
-
-  const addPetsCheckbox = document.getElementById('addPetsCheckbox');
-  const petsContainer = document.getElementById('petsContainer');
-  const addPetBtn = document.getElementById('addPetBtn');
-
-  /* ---------- Hire tanks ---------- */
-  hireTanksCheckbox.addEventListener('change', () => {
-    tankNumberDiv.classList.toggle('hidden', !hireTanksCheckbox.checked);
-    updateTankCost();
-    updateTotalCost();
-  });
-
-  tankNumber.addEventListener('input', () => {
-    updateTankCost();
-    updateTotalCost();
-  });
-
-  function updateTankCost() {
-    const num = Math.min(Math.max(parseInt(tankNumber.value) || 1, 1), 2);
-    tankNumber.value = num;
-    tankCost.innerText = (num * 1.5).toFixed(2);
-  }
-
-  /* ---------- Varieties (Show Entries) ---------- */
-  addVarietiesCheckbox.addEventListener('change', () => {
-    const active = addVarietiesCheckbox.checked;
-    varietiesContainer.classList.toggle('hidden', !active);
-    addVarietyBtn.classList.toggle('hidden', !active);
-
-    if (active && varietiesContainer.children.length === 0) {
-      addVariety();
+    // Tanks
+    const hire = document.getElementById('hireTanks').checked;
+    if (hire) {
+        const tanks = Number(document.getElementById('tankCount').value || 0);
+        cost += tanks * 1.5;
     }
-    updateTotalCost();
-  });
 
-  addVarietyBtn.addEventListener('click', () => {
-    addVariety();
-    updateTotalCost();
-  });
+    // Varieties – £1 per variety, +£1 if dual entry
+    document.querySelectorAll('.variety-entry').forEach(v => {
+        cost += 1; // base cost
+        const dual = v.querySelector('.dualCheck').checked;
+        if (dual) cost += 1; // dual entry cost
+    });
 
-  function addVariety() {
+    // Pets – £1 per pet
+    document.querySelectorAll('.pet-entry').forEach(p => {
+        cost += 1;
+    });
+
+    total = cost;
+    const text = `Total: £${total.toFixed(2)}`;
+    totalBox.textContent = text;
+    // re-append hidden input (since textContent clears children)
+    totalBox.appendChild(totalCostField);
+    totalCostField.value = total.toFixed(2);
+}
+
+// Variety handling
+const addVarieties = document.getElementById('addVarieties');
+const varietyList = document.getElementById('varietyList');
+const addVarietyBtn = document.getElementById('addVarietyBtn');
+
+addVarieties.addEventListener('change', () => {
+    if (addVarieties.checked) {
+        addVarietyBtn.style.display = 'block';
+        if (!varietyList.children.length) {
+            addVariety();
+        }
+    } else {
+        varietyList.innerHTML = '';
+        addVarietyBtn.style.display = 'none';
+        updateTotal();
+    }
+});
+
+function addVariety() {
+    const index = varietyList.children.length;
     const div = document.createElement('div');
-    div.className = 'subsection';
-    const index = varietiesContainer.children.length;
-
+    div.className = 'card variety-entry';
     div.innerHTML = `
-      <div class="subsection-header">Exhibit ${index + 1} (click to toggle)</div>
-      <div class="subsection-content">
-        <label>Rat Name:
-          <input type="text" name="ratName${index}">
-        </label>
-
-        <div class="flex-row">
-          <div>
-            <span>Age:</span>
-            <div class="inline-options">
-              <label><input type="radio" name="age${index}" value="Adult">Adult</label>
-              <label><input type="radio" name="age${index}" value="Kitten">Kitten</label>
-            </div>
-          </div>
-
-          <div>
-            <span>Sex:</span>
-            <div class="inline-options">
-              <label><input type="radio" name="sex${index}" value="Doe">Doe</label>
-              <label><input type="radio" name="sex${index}" value="Buck">Buck</label>
-            </div>
-          </div>
+        <label>Rat Name</label>
+        <input type="text" name="varietyName_${index}" />
+        <label>Age</label>
+        <select name="varietyAge_${index}">
+            <option value="Adult">Adult (14+ weeks)</option>
+            <option value="Kitten">Kitten (under 14 weeks)</option>
+        </select>
+        <label>Sex</label>
+        <select name="varietySex_${index}">
+            <option value="Doe">Doe</option>
+            <option value="Buck">Buck</option>
+        </select>
+        <div class="checkbox-row">
+            <input type="checkbox" class="dualCheck" name="varietyDual_${index}" id="varietyDual_${index}" />
+            <label for="varietyDual_${index}">Dual Entry (Pets)</label>
         </div>
-
-        <label>Section:
-          <select name="section${index}" class="sectionSelect">
-            <option value="">Select Section</option>
-            <option value="Provisional Standard">Provisional Standard</option>
-            <option value="Self">Self</option>
-            <option value="Marked">Marked</option>
-            <option value="Russian">Russian</option>
-            <option value="Shaded">Shaded</option>
-            <option value="AOV">AOV</option>
-            <option value="Rex">Rex</option>
-            <option value="Dumbo">Dumbo</option>
-            <option value="Guide Standard">Guide Standard</option>
-          </select>
-        </label>
-
-        <label>Class:
-          <select name="class${index}" class="classSelect">
-            <option value="">Select Section first</option>
-          </select>
-        </label>
-
-        <div class="inline-options">
-          <label>
-            <input type="checkbox" name="novice${index}">
-            Novice
-          </label>
-          <label>
-            <input type="checkbox" name="dualEntry${index}">
-            Dual Entry (Pets)
-          </label>
-        </div>
-      </div>
     `;
+    varietyList.appendChild(div);
+    div.querySelector('.dualCheck').addEventListener('change', updateTotal);
+    updateTotal();
+}
+addVarietyBtn.addEventListener('click', addVariety);
 
-    varietiesContainer.appendChild(div);
+// Pets handling
+const addPets = document.getElementById('addPets');
+const petList = document.getElementById('petList');
+const addPetBtn = document.getElementById('addPetBtn');
 
-    const header = div.querySelector('.subsection-header');
-    const content = div.querySelector('.subsection-content');
-    content.style.display = 'block';
-
-    header.addEventListener('click', () => {
-      content.style.display = (content.style.display === 'none') ? 'block' : 'none';
-    });
-
-    const sectionSelect = div.querySelector('.sectionSelect');
-    const classSelect = div.querySelector('.classSelect');
-
-    sectionSelect.addEventListener('change', () => {
-      const options = getClassOptions(sectionSelect.value);
-      classSelect.innerHTML = '<option value="">Select Class</option>';
-      options.forEach(opt => {
-        const o = document.createElement('option');
-        o.value = opt;
-        o.innerText = opt;
-        classSelect.appendChild(o);
-      });
-    });
-  }
-
-  function getClassOptions(section) {
-    const data = {
-      "Provisional Standard": ["Bareback","Chestnut","Cinnamon Chinchilla","Copper","Dwarf","Merle","Pink Eyed Ivory","Powder Blue","Tonkinese (Self type)","Tonkinese (Agouti type)","Variegated Downunder"],
-      "Self": ["Pink Eyed White","Champagne","Buff","Platinum","Quicksilver","British Blue","Black Chocolate","Mink","Ivory","Lilac"],
-      "Marked": ["Berkshire/Badger","Irish","Hooded","Variegated","Capped","Essex","Chinchilla","Squirrel","Roan/Striped Roan"],
-      "Russian": ["Russian Blue","Russian Dove","Russian Buff","Russian Blue Agouti","Russian Dove Agouti","Russian Silver","Russian Topaz"],
-      "Shaded": ["Argente Crème","Himalayan","Siamese","Blue Point Siamese","Burmese","Wheaten Burmese","Golden Himalayan","Golden Siamese","Marten","Silver Agouti","Cream Agouti"],
-      "AOV": ["Cream","Topaz","Silver Fawn","Silver","Agouti","Cinnamon","British Blue Agouti","Lilac Agouti","Pearl","Cinnamon Pearl","Platinum Agouti"],
-      "Rex": ["Self","Marked","Russian","Shaded","AOV"],
-      "Dumbo": ["Self","Marked","Russian","Shaded","AOV","Rex"],
-      "Guide Standard": ["Blue Point Himalayan","Russian Burmese","Russian Silver Agouti","Sable Burmese","Spotted Down Under","Silken"]
-    };
-    return data[section] || [];
-  }
-
-  /* ---------- Pets ---------- */
-  addPetsCheckbox.addEventListener('change', () => {
-    const active = addPetsCheckbox.checked;
-    petsContainer.classList.toggle('hidden', !active);
-    addPetBtn.classList.toggle('hidden', !active);
-
-    if (active && petsContainer.children.length === 0) {
-      addPet();
+addPets.addEventListener('change', () => {
+    if (addPets.checked) {
+        addPetBtn.style.display = 'block';
+        if (!petList.children.length) {
+            addPet();
+        }
+    } else {
+        petList.innerHTML = '';
+        addPetBtn.style.display = 'none';
+        updateTotal();
     }
-    updateTotalCost();
-  });
+});
 
-  addPetBtn.addEventListener('click', () => {
-    addPet();
-    updateTotalCost();
-  });
-
-  function addPet() {
+function addPet() {
+    const index = petList.children.length;
     const div = document.createElement('div');
-    div.className = 'subsection';
-    const index = petsContainer.children.length;
-
+    div.className = 'card pet-entry';
     div.innerHTML = `
-      <div class="subsection-header">Pet ${index + 1} (click to toggle)</div>
-      <div class="subsection-content">
-        <label>Rat Name:
-          <input type="text" name="petName${index}">
-        </label>
-
-        <label>Section:
-          <select name="petSection${index}">
-            <option value="">Select Section</option>
+        <label>Rat Name</label>
+        <input type="text" name="petName_${index}" />
+        <label>Section</label>
+        <select name="petSection_${index}">
             <option value="Adult Owned">Adult Owned</option>
             <option value="Junior Owned">Junior Owned</option>
             <option value="Breeder Owned">Breeder Owned</option>
-          </select>
-        </label>
-
-        <div>
-          <span>Sex:</span>
-          <div class="inline-options">
-            <label><input type="radio" name="petSex${index}" value="Buck">Buck</label>
-            <label><input type="radio" name="petSex${index}" value="Doe">Doe</label>
-          </div>
-        </div>
-      </div>
+        </select>
+        <label>Sex</label>
+        <select name="petSex_${index}">
+            <option value="Buck">Buck</option>
+            <option value="Doe">Doe</option>
+        </select>
     `;
+    petList.appendChild(div);
+    updateTotal();
+}
+addPetBtn.addEventListener('click', addPet);
 
-    petsContainer.appendChild(div);
+// Tanks
+const hireTanks = document.getElementById('hireTanks');
+hireTanks.addEventListener('change', () => {
+    document.getElementById('tankNumberBox').style.display = hireTanks.checked ? 'block' : 'none';
+    updateTotal();
+});
 
-    const header = div.querySelector('.subsection-header');
-    const content = div.querySelector('.subsection-content');
-    content.style.display = 'block';
+document.getElementById('tankCount').addEventListener('input', updateTotal);
 
-    header.addEventListener('click', () => {
-      content.style.display = (content.style.display === 'none') ? 'block' : 'none';
-    });
-  }
+/***************  FORM SUBMISSION (EMAILJS)  ***************/
+const form = document.getElementById('entryForm');
 
-  /* ---------- Total cost ---------- */
-  function updateTotalCost() {
-    let total = 0;
-
-    if (hireTanksCheckbox.checked) {
-      total += Math.min(parseInt(tankNumber.value) || 1, 2) * 1.5;
-    }
-
-    // £1 per variety entry + £1 per pet
-    total += varietiesContainer.children.length + petsContainer.children.length;
-
-    totalCostDisplay.innerText = total.toFixed(2);
-  }
-
-  /* ---------- Submit handler (EmailJS) ---------- */
-  document.getElementById('entryForm').addEventListener('submit', function (event) {
+form.addEventListener('submit', function (event) {
     event.preventDefault();
 
-    if (!EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY.startsWith("REPLACE_ME")) {
-      alert("EmailJS is not configured yet. Please contact the show secretary.");
-      return;
-    }
-
     emailjs
-      .sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
-      .then(() => {
-        alert('Entry submitted successfully!');
-        this.reset();
-        // reset dynamic bits
-        varietiesContainer.innerHTML = "";
-        petsContainer.innerHTML = "";
-        tankNumberDiv.classList.add('hidden');
-        addVarietyBtn.classList.add('hidden');
-        addPetBtn.classList.add('hidden');
-        totalCostDisplay.innerText = "0.00";
-      })
-      .catch((error) => {
-        console.error(error);
-        alert('Submission failed – please try again or contact the show secretary.');
-      });
-  });
+        .sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
+        .then(() => {
+            alert('Entry submitted successfully!');
+            // Reset form & dynamic bits
+            form.reset();
+            varietyList.innerHTML = '';
+            petList.innerHTML = '';
+            document.getElementById('tankNumberBox').style.display = 'none';
+            addVarietyBtn.style.display = 'none';
+            addPetBtn.style.display = 'none';
+            updateTotal();
+        })
+        .catch((error) => {
+            console.error(error);
+            alert('Submission failed – please try again or contact the show secretary.');
+        });
+});
+
+// Initialise total field on first load
+updateTotal();
 </script>
 
 </body>
 </html>
+
