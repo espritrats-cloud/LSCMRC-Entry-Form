@@ -276,25 +276,31 @@
   }
 
   /*************** Total cost ***************/
- function updateTotalCost() {
-    let total = 0;
+// Total cost calculation
+function updateTotalCost() {
+  let total = 0;
 
-    // Tanks: £1.50 each, max 2
-    if (hireTanksCheckbox.checked) {
-        total += Math.min(parseInt(tankNumber.value) || 1, 2) * 1.5;
+  // Tanks: £1.50 each, max 2
+  if (hireTanksCheckbox.checked) {
+    total += Math.min(parseInt(tankNumber.value) || 1, 2) * 1.5;
+  }
+
+  // Base £1 for each variety and each pet
+  total += varietiesContainer.children.length + petsContainer.children.length;
+
+  // EXTRA £1 for each Dual Entry (Pets) checked
+  const dualChecks = varietiesContainer.querySelectorAll(
+    'input[type="checkbox"][name^="dualEntry"]'
+  );
+  dualChecks.forEach(cb => {
+    if (cb.checked) {
+      total += 1;
     }
+  });
 
-    // Varieties: £1 per entry
-    const varietyCards = varietiesContainer.children;
-    total += varietyCards.length;
+  totalCostDisplay.innerText = total.toFixed(2);
+}
 
-    // Extra £1 for each Dual Entry (Pets) ticked
-    for (let i = 0; i < varietyCards.length; i++) {
-        const dualCheckbox = varietyCards[i].querySelector('input[type="checkbox"][name^="dualEntry"]');
-        if (dualCheckbox && dualCheckbox.checked) {
-            total += 1;
-        }
-    }
 
     // Pets: £1 per pet
     total += petsContainer.children.length;
