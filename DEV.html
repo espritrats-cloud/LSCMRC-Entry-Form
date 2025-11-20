@@ -214,11 +214,11 @@ The Rat Show Secretary will send you confirmation of your entries via email when
         <h2>Exhibitor details</h2>
 
         <div class="two-col">
-          <label><span>Name or Stud Name*:</span>
+          <label><span>Name or Stud Name:</span>
             <input type="text" name="memberName" required />
           </label>
 
-          <label><span>Email*:</span>
+          <label><span>Email:</span>
             <input type="email" name="memberEmail" required />
           </label>
         </div>
@@ -543,25 +543,34 @@ The Rat Show Secretary will send you confirmation of your entries via email when
 
     /*************** Total cost (with dual entry) ***************/
     function updateTotalCost() {
-      let total = 0;
+      function updateTotalCost() {
+  let total = 0;
 
-      // Tanks: £1.50 each, max 2
-      if (hireTanksCheckbox.checked) {
-        total += Math.min(parseInt(tankNumber.value) || 0, 2) * 1.5;
-      }
+  // Tanks: £1.50 each, max 2 – only if "Hire tanks" is ticked
+  if (hireTanksCheckbox.checked) {
+    let num = parseInt(tankNumber.value) || 0;
+    num = Math.min(Math.max(num, 0), 2); // clamp 0–2
+    total += num * 1.5;
+  }
 
-      // £1 per variety and £1 per pet
-      total += varietiesContainer.children.length + petsContainer.children.length;
+  // Varieties: £1 per exhibit, but ONLY if "Add Varieties?" is ticked
+  if (addVarietiesCheckbox.checked) {
+    total += varietiesContainer.children.length;
 
-      // +£1 for each Dual Entry (Pets) ticked
-      const dualChecks = document.querySelectorAll('input[name^="dualEntry"]');
-      dualChecks.forEach(cb => {
-        if (cb.checked) total += 1;
-      });
+    // +£1 for each Dual Entry only when varieties are active
+    const dualChecks = varietiesContainer.querySelectorAll('input[name^="dualEntry"]');
+    dualChecks.forEach(cb => {
+      if (cb.checked) total += 1;
+    });
+  }
 
-      totalCostDisplay.innerText = total.toFixed(2);
-    }
+  // Pets: £1 per pet, but ONLY if "Add Pets?" is ticked
+  if (addPetsCheckbox.checked) {
+    total += petsContainer.children.length;
+  }
 
+  totalCostDisplay.innerText = total.toFixed(2);
+}
     /*************** Form submission via EmailJS ***************/
     document.getElementById('entryForm').addEventListener('submit', function (event) {
       event.preventDefault();
