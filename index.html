@@ -85,17 +85,15 @@
   <button type="submit">Submit Entry</button>
 </form>
 
-<!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
 <script>
   /***************  EMAILJS SETUP  ***************/
-  emailjs.init("3ZKJ9Faj6dDLhNh5Y"); // Public Key
+  emailjs.init('3ZKJ9Faj6dDLhNh5Y'); // public key
 
-  const EMAILJS_SERVICE_ID = "service_51m2sqm";
-  const EMAILJS_TEMPLATE_ID = "template_d3isckc";
+  const EMAILJS_SERVICE_ID = 'service_51m2sqm';
+  const EMAILJS_TEMPLATE_ID = 'template_d3isckc';
 
-  /*************** DOM references ***************/
+  // DOM elements
   const hireTanksCheckbox = document.getElementById('hireTanksCheckbox');
   const tankNumberDiv = document.getElementById('tankNumberDiv');
   const tankNumber = document.getElementById('tankNumber');
@@ -116,41 +114,32 @@
     updateTankCost();
     updateTotalCost();
   });
-
-  tankNumber.addEventListener('input', () => {
-    updateTankCost();
-    updateTotalCost();
-  });
+  tankNumber.addEventListener('input', () => { updateTankCost(); updateTotalCost(); });
 
   function updateTankCost() {
     const num = Math.min(Math.max(parseInt(tankNumber.value) || 1, 1), 2);
     tankCost.innerText = (num * 1.5).toFixed(2);
   }
 
-  /*************** Varieties ***************/
+  /*************** Varieties logic ***************/
   addVarietiesCheckbox.addEventListener('change', () => {
     varietiesContainer.classList.toggle('hidden', !addVarietiesCheckbox.checked);
     addVarietyBtn.classList.toggle('hidden', !addVarietiesCheckbox.checked);
-    if (addVarietiesCheckbox.checked && varietiesContainer.children.length === 0) {
-      addVariety();
-    }
+    if(addVarietiesCheckbox.checked && varietiesContainer.children.length === 0) addVariety();
     updateTotalCost();
   });
-
-  addVarietyBtn.addEventListener('click', () => {
-    addVariety();
-    updateTotalCost();
-  });
+  addVarietyBtn.addEventListener('click', () => { addVariety(); updateTotalCost(); });
 
   function addVariety() {
     const div = document.createElement('div');
     div.className = 'subsection';
     const index = varietiesContainer.children.length;
-
     div.innerHTML = `
       <div class="subsection-header">Exhibit ${index + 1} (click to toggle)</div>
       <div class="subsection-content">
-        <label>Rat Name:<input type="text" name="ratName${index}"></label>
+        <label>Rat Name:
+          <input type="text" name="ratName${index}">
+        </label>
         <div class="flex-row">
           <label>Age:
             <input type="radio" name="age${index}" value="Adult"> Adult
@@ -182,26 +171,27 @@
         <label><input type="checkbox" name="dualEntry${index}"> Dual Entry (Pets)</label>
       </div>
     `;
-
     varietiesContainer.appendChild(div);
+
+    // NEW: recalc when dual entry is toggled
+    const dualCheckbox = div.querySelector('input[name^="dualEntry"]');
+    if (dualCheckbox) {
+      dualCheckbox.addEventListener('change', updateTotalCost);
+    }
 
     const header = div.querySelector('.subsection-header');
     const content = div.querySelector('.subsection-content');
-
-    header.addEventListener('click', () => {
-      content.style.display = (content.style.display === 'none') ? 'block' : 'none';
-    });
+    content.style.display = 'block';
+    header.addEventListener('click', () => { content.style.display = content.style.display === 'none' ? 'block' : 'none'; });
 
     const sectionSelect = div.querySelector('.sectionSelect');
     const classSelect = div.querySelector('.classSelect');
-
     sectionSelect.addEventListener('change', () => {
       const options = getClassOptions(sectionSelect.value);
       classSelect.innerHTML = '';
       options.forEach(opt => {
         const o = document.createElement('option');
-        o.value = opt;
-        o.innerText = opt;
+        o.value = opt; o.innerText = opt;
         classSelect.appendChild(o);
       });
     });
@@ -224,31 +214,25 @@
     return data[section] || [];
   }
 
-  /*************** Pets ***************/
+  /*************** Pets logic ***************/
   addPetsCheckbox.addEventListener('change', () => {
     petsContainer.classList.toggle('hidden', !addPetsCheckbox.checked);
     addPetBtn.classList.toggle('hidden', !addPetsCheckbox.checked);
-    if (addPetsCheckbox.checked && petsContainer.children.length === 0) {
-      addPet();
-    }
+    if(addPetsCheckbox.checked && petsContainer.children.length === 0) addPet();
     updateTotalCost();
   });
-
-  addPetBtn.addEventListener('click', () => {
-    addPet();
-    updateTotalCost();
-  });
+  addPetBtn.addEventListener('click', () => { addPet(); updateTotalCost(); });
 
   function addPet() {
     const div = document.createElement('div');
     div.className = 'subsection';
-
     const index = petsContainer.children.length;
-
     div.innerHTML = `
       <div class="subsection-header">Pet ${index + 1} (click to toggle)</div>
       <div class="subsection-content">
-        <label>Rat Name:<input type="text" name="petName${index}"></label>
+        <label>Rat Name:
+          <input type="text" name="petName${index}">
+        </label>
         <label>Section:
           <select name="petSection${index}">
             <option value="">Select Section</option>
@@ -267,63 +251,40 @@
 
     const header = div.querySelector('.subsection-header');
     const content = div.querySelector('.subsection-content');
-
-    header.addEventListener('click', () => {
-      content.style.display = (content.style.display === 'none') ? 'block' : 'none';
-    });
+    content.style.display = 'block';
+    header.addEventListener('click', () => { content.style.display = content.style.display === 'none' ? 'block' : 'none'; });
 
     updateTotalCost();
   }
 
-  /*************** Total cost ***************/
-// Total cost calculation
-function updateTotalCost() {
-  let total = 0;
+  /*************** Total cost (with dual entry) ***************/
+  function updateTotalCost() {
+    let total = 0;
 
-  // Tanks: £1.50 each, max 2
-  if (hireTanksCheckbox.checked) {
-    total += Math.min(parseInt(tankNumber.value) || 1, 2) * 1.5;
-  }
-
-  // Base £1 for each variety and each pet
-  total += varietiesContainer.children.length + petsContainer.children.length;
-
-  // EXTRA £1 for each Dual Entry (Pets) checked
-  const dualChecks = varietiesContainer.querySelectorAll(
-    'input[type="checkbox"][name^="dualEntry"]'
-  );
-  dualChecks.forEach(cb => {
-    if (cb.checked) {
-      total += 1;
+    // Tanks: £1.50 each, max 2
+    if(hireTanksCheckbox.checked) {
+      total += Math.min(parseInt(tankNumber.value) || 0, 2) * 1.5;
     }
-  });
 
-  totalCostDisplay.innerText = total.toFixed(2);
-}
+    // £1 per variety and £1 per pet
+    total += varietiesContainer.children.length + petsContainer.children.length;
 
-
-    // Pets: £1 per pet
-    total += petsContainer.children.length;
+    // +£1 for each Dual Entry (Pets) ticked
+    const dualChecks = document.querySelectorAll('input[name^="dualEntry"]');
+    dualChecks.forEach(cb => {
+      if (cb.checked) total += 1;
+    });
 
     totalCostDisplay.innerText = total.toFixed(2);
-}
-  /*************** EmailJS submission ***************/
-  document.getElementById('entryForm')
-    .addEventListener('submit', function(event) {
-      event.preventDefault();
+  }
 
-      emailjs.sendForm(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        this
-      )
-      .then(() => {
-        alert('Entry submitted successfully!');
-      })
-      .catch((error) => {
-        alert('Submission failed: ' + JSON.stringify(error));
-      });
-    });
+  /*************** Form submission via EmailJS ***************/
+  document.getElementById('entryForm').addEventListener('submit', function(event){
+    event.preventDefault();
+    emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
+      .then(() => { alert('Entry submitted successfully!'); },
+            (error) => { alert('Submission failed: ' + JSON.stringify(error)); });
+  });
 
 </script>
 
