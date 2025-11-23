@@ -186,59 +186,78 @@
       font-size: 14px;
     }
 
+    button[type=button] + button[type=button] {
+      margin-left: 8px;
+    }
+
+    .helper-text {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 6px;
+    }
+
     .hidden {
       display: none;
     }
 
-    /* ------------------------------- */
-    /* BOLD Exhibitor Details labels */
-    /* ------------------------------- */
-    .exhibitor-bold label span {
-      font-weight: bold;
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      .form-card {
+        padding: 24px 18px 20px;
+      }
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+      .form-header img {
+        max-width: 220px;
+      }
     }
   </style>
 </head>
-
 <body>
   <div class="form-shell">
     <form id="entryForm" class="form-card">
       <div class="form-header">
+        <!-- logo file in repo root -->
         <img src="savingPNG.png" alt="LSCMRC logo" />
         <h1 class="form-title">LSCMRC ENTRIES - RATS</h1>
         <p class="form-subtitle">
-The Rat Show Secretary will send you confirmation of your entries via email when the entries have been entered on to the show program. Entries close at 10pm on the Wednesday prior to the show.        </p>
+          The Rat Show Secretary will send you confirmation of your entries via email when the
+          entries have been entered onto the show program. Entries close at 10pm on the Wednesday
+          prior to the show.
+        </p>
       </div>
 
       <!-- Member Information -->
-      <div class="section exhibitor-bold">
+      <div class="section">
         <h2>Exhibitor details</h2>
 
         <div class="two-col">
-          <label><span>Name or Stud Name:</span>
+          <label><strong>Name or Stud Name*:</strong>
             <input type="text" name="memberName" required />
           </label>
 
-          <label><span>Email:</span>
+          <label><strong>Email*:</strong>
             <input type="email" name="memberEmail" required />
           </label>
         </div>
 
         <div class="two-col">
-          <label><span>Phone:</span>
+          <label><strong>Phone:</strong>
             <input type="text" name="phone" />
           </label>
 
           <div>
             <div class="two-col">
               <label>
-                <span>LSCMRC Member</span>
+                <strong>LSCMRC Member</strong>
                 <div class="inline-options">
                   <label><input type="checkbox" name="lscmrcMember" /> Yes</label>
                 </div>
               </label>
 
               <label>
-                <span>Junior (under 16)</span>
+                <strong>Junior (under 16)</strong>
                 <div class="inline-options">
                   <label><input type="checkbox" name="junior" /> Yes</label>
                 </div>
@@ -346,11 +365,9 @@ The Rat Show Secretary will send you confirmation of your entries via email when
       tankNumberDiv.classList.toggle('hidden', !checked);
 
       if (!checked) {
-        // no hire tanks – clear the value so EmailJS doesn't see "1"
         tankNumber.value = '';
         tankCost.innerText = '0.00';
       } else {
-        // when turning it on, default to 1 tank if it's empty
         if (!tankNumber.value) tankNumber.value = 1;
         updateTankCost();
       }
@@ -376,24 +393,18 @@ The Rat Show Secretary will send you confirmation of your entries via email when
 
     /*************** Varieties logic ***************/
     addVarietiesCheckbox.addEventListener('change', () => {
-  const checked = addVarietiesCheckbox.checked;
+      varietiesContainer.classList.toggle('hidden', !addVarietiesCheckbox.checked);
+      addVarietyBtn.classList.toggle('hidden', !addVarietiesCheckbox.checked);
+      if (addVarietiesCheckbox.checked && varietiesContainer.children.length === 0) {
+        addVariety();
+      }
+      updateTotalCost();
+    });
 
-  // Show/hide the UI
-  varietiesContainer.classList.toggle('hidden', !checked);
-  addVarietyBtn.classList.toggle('hidden', !checked);
-
-  if (checked) {
-    // If just turned on and there are no exhibits yet, add one
-    if (varietiesContainer.children.length === 0) {
+    addVarietyBtn.addEventListener('click', () => {
       addVariety();
-    }
-  } else {
-    // If turned off, remove all exhibits so they don't count towards cost
-    varietiesContainer.innerHTML = '';
-  }
-
-  updateTotalCost();
-});
+      updateTotalCost();
+    });
 
     function addVariety() {
       const div = document.createElement('div');
@@ -483,25 +494,12 @@ The Rat Show Secretary will send you confirmation of your entries via email when
     }
 
     /*************** Pets logic ***************/
-   addPetsCheckbox.addEventListener('change', () => {
-  const checked = addPetsCheckbox.checked;
-
-  // Show/hide the UI
-  petsContainer.classList.toggle('hidden', !checked);
-  addPetBtn.classList.toggle('hidden', !checked);
-
-  if (checked) {
-    // If just turned on and there are no pets yet, add one
-    if (petsContainer.children.length === 0) {
-      addPet();
-    }
-  } else {
-    // If turned off, remove all pets so they don't count towards cost
-    petsContainer.innerHTML = '';
-  }
-
-  updateTotalCost();
-});
+    addPetsCheckbox.addEventListener('change', () => {
+      petsContainer.classList.toggle('hidden', !addPetsCheckbox.checked);
+      addPetBtn.classList.toggle('hidden', !addPetsCheckbox.checked);
+      if (addPetsCheckbox.checked && petsContainer.children.length === 0) addPet();
+      updateTotalCost();
+    });
 
     addPetBtn.addEventListener('click', () => { addPet(); updateTotalCost(); });
 
@@ -543,34 +541,34 @@ The Rat Show Secretary will send you confirmation of your entries via email when
 
     /*************** Total cost (with dual entry) ***************/
     function updateTotalCost() {
-      function updateTotalCost() {
-  let total = 0;
+      let total = 0;
 
-  // Tanks: £1.50 each, max 2 – only if "Hire tanks" is ticked
-  if (hireTanksCheckbox.checked) {
-    let num = parseInt(tankNumber.value) || 0;
-    num = Math.min(Math.max(num, 0), 2); // clamp 0–2
-    total += num * 1.5;
-  }
+      // Tanks: £1.50 each, max 2 – only if "Hire tanks" is ticked
+      if (hireTanksCheckbox.checked) {
+        let num = parseInt(tankNumber.value) || 0;
+        num = Math.min(Math.max(num, 0), 2);
+        total += num * 1.5;
+      }
 
-  // Varieties: £1 per exhibit, but ONLY if "Add Varieties?" is ticked
-  if (addVarietiesCheckbox.checked) {
-    total += varietiesContainer.children.length;
+      // Varieties: £1 per exhibit only if "Add Varieties?" is ticked
+      if (addVarietiesCheckbox.checked) {
+        total += varietiesContainer.children.length;
 
-    // +£1 for each Dual Entry only when varieties are active
-    const dualChecks = varietiesContainer.querySelectorAll('input[name^="dualEntry"]');
-    dualChecks.forEach(cb => {
-      if (cb.checked) total += 1;
-    });
-  }
+        // +£1 for each Dual Entry only when varieties are active
+        const dualChecks = varietiesContainer.querySelectorAll('input[name^="dualEntry"]');
+        dualChecks.forEach(cb => {
+          if (cb.checked) total += 1;
+        });
+      }
 
-  // Pets: £1 per pet, but ONLY if "Add Pets?" is ticked
-  if (addPetsCheckbox.checked) {
-    total += petsContainer.children.length;
-  }
+      // Pets: £1 per pet only if "Add Pets?" is ticked
+      if (addPetsCheckbox.checked) {
+        total += petsContainer.children.length;
+      }
 
-  totalCostDisplay.innerText = total.toFixed(2);
-}
+      totalCostDisplay.innerText = total.toFixed(2);
+    }
+
     /*************** Form submission via EmailJS ***************/
     document.getElementById('entryForm').addEventListener('submit', function (event) {
       event.preventDefault();
