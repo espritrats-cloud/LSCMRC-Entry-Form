@@ -240,58 +240,48 @@ The Rat Show Secretary will send you confirmation of your entries via email when
       </div>
 
       <!-- Member Information -->
-      <div class="section exhibitor-bold">
-        <h2>Exhibitor details</h2>
+<div class="section exhibitor-bold">
+  <h2>Exhibitor details</h2>
 
-      <div class="two-col">
-        <label>
-          <span>Name*:</span>
-          <input type="text" name="memberName" required />
-        </label>
+  <!-- Row 1: Name + Stud Name -->
+  <div class="two-col">
+    <label><span>Name*:</span>
+      <input type="text" name="memberName" required />
+    </label>
 
-        <label>
-         <span>Stud Name*:</span>
-         <input type="text" name="studName" required />
-        </label>
+    <label><span>Stud Name*:</span>
+      <input type="text" name="studName" required />
+    </label>
+  </div>
+
+  <!-- Row 2: Email + Phone -->
+  <div class="two-col">
+    <label><span>Email*:</span>
+      <input type="email" name="memberEmail" required />
+    </label>
+
+    <label><span>Phone:</span>
+      <input type="text" name="phone" />
+    </label>
+  </div>
+
+  <!-- Row 3: Member + Junior -->
+  <div class="two-col">
+    <label>
+      <span>LSCMRC Member</span>
+      <div class="inline-options">
+        <label><input type="checkbox" name="lscmrcMember" /> Yes</label>
       </div>
+    </label>
 
-    <div class="two-col">
-      <label>
-        <span>Email*:</span>
-        <input type="email" name="memberEmail" required />
-      </label>
-    </div>
-
-          <label><span>Email*:</span>
-            <input type="email" name="memberEmail" required />
-          </label>
-        </div>
-
-        <div class="two-col">
-          <label><span>Phone:</span>
-            <input type="text" name="phone" />
-          </label>
-
-          <div>
-            <div class="two-col">
-              <label>
-                <span>LSCMRC Member</span>
-                <div class="inline-options">
-                  <label><input type="checkbox" name="lscmrcMember" /> Yes</label>
-                </div>
-              </label>
-
-              <label>
-                <span>Junior (under 16)</span>
-                <div class="inline-options">
-                  <label><input type="checkbox" name="junior" /> Yes</label>
-                </div>
-              </label>
-            </div>
-          </div>
-        </div>
+    <label>
+      <span>Junior (under 16)</span>
+      <div class="inline-options">
+        <label><input type="checkbox" name="junior" /> Yes</label>
       </div>
-
+    </label>
+  </div>
+</div>
       <!-- Hire Tanks -->
       <div class="section">
         <h2>Hire Tanks</h2>
