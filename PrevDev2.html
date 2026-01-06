@@ -32,6 +32,15 @@
       margin-bottom: 24px;
     }
 
+    .member-flags {
+  margin-top: 16px;   /* pushes the whole row down */
+}
+
+.member-flags span {
+  display: block;
+  margin-bottom: 6px; /* space between heading and checkbox */
+}
+
     .form-header img {
       max-width: 450px; /* bigger logo on desktop*/
       width: 100%;      /* shrink on small screens */
@@ -275,22 +284,21 @@
         </div>
 
         <!-- Row 3: Member + Junior -->
-        <div class="two-col">
-          <div>
-            <span style="font-weight:bold;">LSCMRC Member</span>
-            <div class="inline-options">
-              <label><input type="checkbox" name="lscmrcMember" /> Yes</label>
-            </div>
-          </div>
+        <div class="two-col member-flags">
+  <div>
+    <span>LSCMRC Member</span>
+    <div class="inline-options">
+      <label><input type="checkbox" name="lscmrcMember" /> Yes</label>
+    </div>
+  </div>
 
-          <div>
-            <span style="font-weight:bold;">Junior (under 16)</span>
-            <div class="inline-options">
-              <label><input type="checkbox" name="junior" /> Yes</label>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div>
+    <span>Junior (under 16)</span>
+    <div class="inline-options">
+      <label><input type="checkbox" name="junior" /> Yes</label>
+    </div>
+  </div>
+</div>
 
       <!-- Hire Tanks -->
       <div class="section">
