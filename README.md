@@ -62,5 +62,3 @@ All of this is sent in a formatted email to the show secretary, including a full
    git clone https://github.com/espritrats-cloud/LSCMRC-Entry-Form.git
    cd LSCMRC-Entry-Form
    
-## 🐀 Credits
-Built for the **LSCMRC** by Samantha to simplify rat show entries and reduce manual admin work.
