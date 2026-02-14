@@ -4,7 +4,7 @@
   <title>LSCMRC Rat Entry Form</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* Page background & centering */
+   
     body {
       margin: 0;
       padding: 40px 10px;
@@ -17,33 +17,33 @@
       margin: 0 auto;
     }
 
-    /* Main card */
+    
     .form-card {
       background: #ffffff;
       border-radius: 12px;
       padding: 32px 32px 28px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-      box-sizing: border-box; /* padding */
+      box-sizing: border-box; 
     }
 
-    /* Header with logo + title */
+    
     .form-header {
       text-align: center;
       margin-bottom: 24px;
     }
 
     .member-flags {
-  margin-top: 16px;   /* pushes the whole row down */
+  margin-top: 16px;   
 }
 
 .member-flags span {
   display: block;
-  margin-bottom: 6px; /* space between heading and checkbox */
+  margin-bottom: 6px; 
 }
 
     .form-header img {
-      max-width: 450px; /* bigger logo on desktop*/
-      width: 100%;      /* shrink on small screens */
+      max-width: 450px; 
+      width: 100%;      
       height: auto;
       display: block;
       margin: 0 auto 12px;
@@ -60,7 +60,7 @@
 
       .form-header img { max-width: 260px; }
 
-      .two-col { grid-template-columns: 1fr; } /* stack inputs */
+      .two-col { grid-template-columns: 1fr; } 
     }
 
     .form-title {
@@ -86,7 +86,7 @@
       font-style: italic;
     }
 
-    /* Sections */
+    
     .section {
       margin-top: 24px;
       padding-top: 8px;
@@ -129,14 +129,14 @@
       min-height: 80px;
     }
 
-    /* Two-column rows on desktop */
+    
     .two-col {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px 24px;
     }
 
-    /* Check/radio rows */
+    
     .inline-options {
       margin-top: 10px;
       display: flex;
@@ -217,12 +217,12 @@
 
     .hidden { display: none; }
 
-    /* Bold exhibitor labels only */
+    
     .exhibitor-bold label span { font-weight: bold; }
     
     .exhibitor-bold .member-flags span { font-weight: bold; }
     
-    /* Visually hidden but still submitted */
+    
     .sr-only {
       position: absolute !important;
       width: 1px !important;
@@ -250,7 +250,7 @@
         </p>
       </div>
 
-      <!-- IMPORTANT: these hidden fields are what you should use in EmailJS template -->
+      
       <!-- Use {{studName}}, {{varietySummary}}, {{petsSummary}}, {{hireTanksText}}, {{tankNumber}}, {{tankCost}}, {{totalCost}} -->
       <textarea class="sr-only" name="varietySummary" id="varietySummary" aria-hidden="true"></textarea>
       <textarea class="sr-only" name="petsSummary" id="petsSummary" aria-hidden="true"></textarea>
@@ -258,11 +258,11 @@
       <input class="sr-only" type="text" name="tankCost" id="tankCostField" aria-hidden="true" />
       <input class="sr-only" type="text" name="totalCost" id="totalCostField" aria-hidden="true" />
 
-      <!-- Member Information -->
+      
       <div class="section exhibitor-bold">
         <h2>Exhibitor details</h2>
 
-        <!-- Row 1: Name + Stud Name -->
+        
         <div class="two-col">
           <label><span>Name*:</span>
             <input type="text" name="memberName" required />
@@ -274,7 +274,7 @@
           </label>
         </div>
 
-        <!-- Row 2: Email + Phone -->
+        
         <div class="two-col">
           <label><span>Email*:</span>
             <input type="email" name="memberEmail" required />
@@ -285,7 +285,7 @@
           </label>
         </div>
 
-        <!-- Row 3: Member + Junior -->
+        
         <div class="two-col member-flags">
   <div>
     <span>LSCMRC Member</span>
@@ -302,7 +302,7 @@
   </div>
 </div>
 
-      <!-- Hire Tanks -->
+      
       <div class="section">
         <h2>Hire Tanks</h2>
         <div class="inline-options">
@@ -320,7 +320,7 @@
         </div>
       </div>
 
-      <!-- Show Entries -->
+      
       <div class="section">
         <h2>Show Entries</h2>
         <div class="inline-options">
@@ -334,7 +334,7 @@
         <p class="helper-text" id="varietyLimitMsg" style="display:none;">Maximum 10 exhibits reached.</p>
       </div>
 
-      <!-- Pets -->
+      
       <div class="section">
         <h2>Pets</h2>
         <div class="inline-options">
@@ -348,7 +348,7 @@
         <p class="helper-text" id="petLimitMsg" style="display:none;">Maximum 10 pets reached.</p>
       </div>
 
-      <!-- Additional Information -->
+      
       <div class="section">
         <h2>Additional information</h2>
         <label>Any other information:
@@ -420,7 +420,7 @@
       tankNumberDiv.classList.toggle('hidden', !checked);
 
       if (!checked) {
-        // Clear so EmailJS doesn't see the default "1"
+        
         tankNumber.value = '';
         tankCostSpan.innerText = '0.00';
       } else {
