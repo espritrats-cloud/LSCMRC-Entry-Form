@@ -8,7 +8,7 @@ Entries are submitted online and emailed to the show secretary via [EmailJS](htt
 ## Live Form
 
 GitHub Pages:  
-https://espritrats-cloud.github.io/LSCMRC-Entry-Form/
+[https://espritrats-cloud.github.io/LSCMRC-Entry-Form/](https://espritrats-cloud.github.io/LSCMRC-Entry-Form/PrevDev2.html)
 
 ---
 
